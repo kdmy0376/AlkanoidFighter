@@ -1,0 +1,38 @@
+
+
+class TwoParam<T,U>{
+	T item1;
+	U item2;
+	
+	public void setItem1(T item){
+		item1 = item;
+		System.out.println(item1);
+	}
+	public void setItem2(T item){
+		item2 = item;
+		System.out.println(item2);
+	}
+}
+class AAA{
+	public void print(){
+		System.out.println("aaa print");
+	}
+}
+class BBB{
+	public void print(){
+		System.out.println("bbb print");
+	}
+}
+
+class ClassMain {
+	public static void main(String[] args)
+	{
+		AAA aaa = new AAA();
+		BBB bbb = new BBB();
+		TwoParam<AAA,BBB> inst = new TwoParam<AAA,BBB>();
+		
+		inst.setItem1(aaa);
+		inst.setItem2(bbb);
+	}
+
+}

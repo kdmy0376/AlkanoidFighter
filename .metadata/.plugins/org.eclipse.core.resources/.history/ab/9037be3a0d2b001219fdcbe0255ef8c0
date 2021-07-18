@@ -1,0 +1,41 @@
+class AAA{
+	public String toString() {
+		return "Class AAA";
+	}
+}
+class BBB{
+	public String toString(){
+		return "Class BBB";
+	}
+}
+class InstanceTypeShower{
+	int showCnt=0;
+	
+	public <T> void showInstType(T inst){	//특정 메소드에 대해서만 제네릭 선언 허용
+		System.out.println(inst);
+		showCnt++;
+	}
+	
+	public <T,U> void showInstType2(T inst1, U inst2){	//둘 이상의 자료형 매개변수
+		System.out.println(inst1);						//T, U에 대한 Generic메소드
+		System.out.println(inst2);
+	}
+	
+	void showPrintCnt(){
+		System.out.println("Show count : " + showCnt);
+	}
+}
+class GenericMain
+{
+	public static void main(String[] args){
+		AAA aaa = new AAA();
+		BBB bbb = new BBB();
+		
+		InstanceTypeShower shower = new InstanceTypeShower();
+		shower.<AAA>showInstType(aaa);
+		shower.showInstType(bbb);	//참조변수 bbb의 자료형을 근거로 자료형 정보를 판단 가능
+		shower.showPrintCnt();
+		System.out.println();
+		shower.showInstType2(aaa, bbb);	//shower.<AAA, BBB>showInstType2(aaa, bbb);		
+	}
+}

@@ -1,0 +1,43 @@
+class Fruit{
+	public void showYou(){
+		System.out.println("난 과일");
+	}
+}
+class Apple extends Fruit{
+	public void showYou(){
+		super.showYou();
+		System.out.println("난 붉은 과일");
+	}
+}
+class FruitBox<T>{
+	T item;
+	public void store(T item){
+		this.item = item;
+	}
+	public T pullOut(){
+		return item;
+	}
+}
+class ClassMain{
+	public static void openAndShowFruitBox2(FruitBox<Fruit> box){
+		System.out.println("정상 처리");
+	}
+	public static void openAndShowFruitBox(FruitBox<? extends Fruit> box)
+	{
+		Fruit fruit = box.pullOut();
+		fruit.showYou();
+	}
+	public static void main(String[] args)
+	{
+		FruitBox<Fruit> box1 = new FruitBox<Fruit>();
+		box1.store(new Fruit());
+		
+		FruitBox<Apple> box2 = new FruitBox<Apple>();
+		box2.store(new Apple());	
+		
+		openAndShowFruitBox(box1);
+		openAndShowFruitBox(box2);
+		
+		openAndShowFruitBox2(box1);
+	}
+}

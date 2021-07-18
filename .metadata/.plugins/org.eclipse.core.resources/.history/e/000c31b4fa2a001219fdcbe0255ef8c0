@@ -1,0 +1,50 @@
+//Generic Class(자료형에 안전(store("오렌지");) + 구현의 편이(Object))
+class Orange
+{
+	int sugarContent;
+	public Orange(int sugar){	//Constructor
+		sugarContent = sugar;
+	}
+	public void showSugarContent(){
+		System.out.println("당도 "+sugarContent);
+	}	
+}
+class Apple
+{
+	int weight;
+	public Apple(int weight)	//Constructor
+	{
+		this.weight = weight;
+	}
+	public void showAppleWeight()
+	{
+		System.out.println("무게 "+weight);
+	}
+}
+class FruitBox<T>	//T에 해당하는 자료형 이름은 인스턴스를 생성하는 순간에 결정
+{
+	T item;
+	
+	public FruitBox(T item)	//Generic Constructor
+	{
+		this.item = item;
+	}	
+	public T pullOut(){
+		return item;
+	}
+}
+class GenericMain
+{
+	public static void main(String[] args)
+	{
+		FruitBox<Orange> orBox = new FruitBox<Orange>(new Orange(10));	//Orange 클래스 기반
+		//orBox.store(new Orange(10));
+		Orange org = orBox.pullOut();
+		org.showSugarContent();
+		
+		FruitBox<Apple> apBox = new FruitBox<Apple>(new Apple(20));	//Apple 클래스 기반
+		//apBox.store(new Apple(20));
+		Apple app = apBox.pullOut();
+		app.showAppleWeight();
+	}
+}

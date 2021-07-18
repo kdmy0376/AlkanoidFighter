@@ -1,0 +1,89 @@
+interface SimpleInterface{
+	public void showYourName();		
+}
+class UpperClass{
+	public void showYourAncestor(){
+		System.out.println("UpperClass");
+	}
+}
+class AAA extends UpperClass implements SimpleInterface{
+	public void showYourName(){	//Overriding
+		System.out.println("Class AAA");
+	}
+}
+class BBB extends UpperClass implements SimpleInterface{
+	public void showYourName(){	//Overriding
+		System.out.println("Class BBB");
+	}
+}
+class CCC extends BBB{
+	public void showYourName(){
+		System.out.println("ccc");
+	}
+}
+class DDD extends UpperClass{	//UpperClass만 상속
+	public void showYourName(){	//Overriding
+		System.out.println("Class DDD");
+	}	
+}
+class EEE implements SimpleInterface{	//SimpleInterface만 구현
+	public void showYourName(){	//Overriding
+		System.out.println("Class EEE");
+	}	
+}
+class FFF{
+	public void showYourName(){
+		System.out.println("fff");
+	}
+}
+class ClassMain{
+	public static <T> void showInstanceAncestor(T param){
+		//강제 형변환(제네릭 매개변수로는 Object클래스에 정의된 메소드만 호출 가능하기 때문에)
+		((SimpleInterface)param).showYourName();	//(CCC)param는 불가능
+	}												//param.showYourName();는 불가능
+	public static <T> void showInstanceName(T param){
+		((UpperClass)param).showYourAncestor();
+	}
+	//SimpleInterface를 구현하지 않은 인스턴스 또는 UpperClass를 상속하지 않은 인스턴스의 참조 값이 메소드에
+	//전달되어도 컴파일 및 실행이 되므로 제네릭의 장점에 위배됨(자료형에 안전하지 않음)
+	
+	//T가 SimpleInterface를 상속/구현하는 클래스의 자료형이 되어야 함을 명시
+	public static <T extends SimpleInterface> void showInstAnc(T param){
+		param.showYourName();	//T를 SimpleInterface를 구현하는 클래스로 제한했기 때문에
+	}							//이 인터페이스에 정의되어 있는 메소드의 호출이 가능
+	public static <T extends UpperClass> void showInstName(T param){
+		param.showYourAncestor();
+	}	
+	public static void main(String[] args)
+	{
+		AAA aaa = new AAA();
+		BBB bbb = new BBB();
+		CCC ccc = new CCC();
+		DDD ddd = new DDD();
+		EEE eee = new EEE();
+		FFF fff = new FFF();
+		
+		showInstanceAncestor(aaa);
+		showInstanceName(aaa);
+		showInstanceAncestor(bbb);
+		showInstanceName(bbb);
+		showInstanceAncestor(ccc);
+		showInstanceName(ccc);
+		//showInstanceAncestor(fff); //Cast 불가능
+		//showInstanceName(fff);
+		
+		System.out.println();
+		showInstanceAncestor(eee);
+		showInstanceName(ddd);
+		
+		System.out.println();
+		showInstAnc(aaa);
+		showInstName(aaa);
+		showInstAnc(bbb);
+		showInstName(bbb);
+		showInstAnc(ccc);
+		showInstName(ccc);
+		showInstAnc(eee);
+		showInstName(eee);
+	}
+}

@@ -1,2 +1,2 @@
-# AlkanoidFighter
-Implement the game project that is similar to Alkanoid that has been already released.
+#2012.11.29. 
+Alkanoid

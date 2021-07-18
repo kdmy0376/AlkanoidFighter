@@ -1,0 +1,64 @@
+//와일드 카드(?)와 제네릭 변수의 선언
+class Fruit{
+	public void showYou(){
+		System.out.println("난 과일");
+	}
+}
+class Apple extends Fruit{
+	public void showYou(){
+		super.showYou();
+		System.out.println("난 붉은 과일");
+	}
+}
+class FruitBox<T>{
+	T item;
+	public void store(T item){
+		this.item = item;
+	}
+	public T pullOut(){
+		return item;
+	}
+}
+class ClassMain{
+	public static void openAndShowFruitBox2(FruitBox<Fruit> box){
+		System.out.println("정상 처리");
+	}
+	
+	//Fruit을 상속하는 모든 클래스, 자료형을 결정짓는 제네릭 매개변수 T에
+	//Fruit클래스와, Fruit을 상속하는 클래스
+	//전달되는 자료형에 상관없이 FruitBox<T>의 인스턴스를 참조하려면 다음과 같이 선언
+	//FruitBox<?> box; = FruitBox<? extends Object> box;
+	public static void openAndShowFruitBox(FruitBox<? extends Fruit> box)	//Fruit를 상속하는 클래스의
+	{																	  	//인스턴스라면 무엇이든지
+		Fruit fruit = box.pullOut();									 	//참조 가능한 참조변수 선언
+		fruit.showYou();
+	}
+	
+	public static void openAndShowFruitBox3(FruitBox<? super Fruit> box)	//Fruit가 상속하는 클래스의
+	{																	  	//인스턴스라면 무엇이든지
+																			//참조 가능한 참조변수 선언
+	}
+	
+	public static void main(String[] args)
+	{
+		FruitBox<Fruit> box1 = new FruitBox<Fruit>();
+		box1.store(new Fruit());
+		
+		FruitBox<Apple> box2 = new FruitBox<Apple>();
+		box2.store(new Apple());
+		
+		FruitBox<Object> box3 = new FruitBox<Object>();
+				
+		openAndShowFruitBox(box1);
+		openAndShowFruitBox(box2);
+				
+		openAndShowFruitBox2(box1);
+		//openAndShowFruitBox2(box2); //컴파일 에러 발생
+		//Fruit와 Apple이 상속관계에 놓여있다고 해서 FruitBox<Fruit>과 FruitBox<Apple>이 상속관계에
+		//놓이는 것은 아니다.
+		
+		openAndShowFruitBox3(box3);
+		openAndShowFruitBox3(box1);
+		//openAndShowFruitBox3(box2);
+	}
+}

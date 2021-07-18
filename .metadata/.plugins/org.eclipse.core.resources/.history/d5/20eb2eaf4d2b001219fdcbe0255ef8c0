@@ -1,0 +1,18 @@
+class AAA<T>{
+	T itemAAA;
+}
+class BBB<T> extends AAA<T>{	//BBB도 제네릭 클래스로 정의된다
+	T itemBBB;
+}
+class BBB2 extends AAA<String>{	//AAA<T>클래스의 T를 지정해서 상속
+	int itemBBB;
+}
+class ClassMain{
+	public static void main(String[] args)
+	{
+		BBB<String> myString = new BBB<String>();
+		BBB<Integer> myInteger = new BBB<Integer>();
+		
+		
+	}
+}
